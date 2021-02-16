@@ -19,8 +19,8 @@
       <a class="navbar-brand" href="#"></a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Form</a></li>
-      <li><a href="/listing">Listing Page</a></li>
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/listing?film=0&people=0">Listing Page</a></li>
     </ul>
   </div>
 </nav>

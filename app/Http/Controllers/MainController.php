@@ -101,4 +101,34 @@ class MainController extends Controller
 
         return response()->json($Response_value,200);
     }
+
+
+    // Second page.
+
+    public function dropDownInfo(Request $request)
+    {
+        $films = Film::select('f_id','f_title')->get();
+        $people = People::select('p_id','p_name')->get();
+        $url = array('film'=>$request->input('film'),'people'=>$request->input('people'));
+
+        if($url['people']!=0)
+        {
+            $filminfo = DB::table('people_films')
+                        ->join('films','films.f_id','=','people_films.pf_fid')
+                        ->join('peoples','peoples.p_id','=','people_films.pf_pid')
+                        ->where(array('people_films.pf_pid'=>$url['people']))->get();
+            $peopleinfo=[];
+        }else{
+            $filminfo = [];
+            $peopleinfo = DB::table('people_films')
+                            ->join('peoples','peoples.p_id','=','people_films.pf_pid')
+                            ->where(array('people_films.pf_fid'=>$url['film']))->get();
+        }
+
+
+        $data = array('film'=>$films,'people'=>$people,'url'=>$url,'p_info'=>$peopleinfo,'f_info'=>$filminfo);
+
+
+        return view('MainComponent/listing')->with($data);
+    }
 }
